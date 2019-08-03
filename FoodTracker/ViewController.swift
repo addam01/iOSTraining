@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
     //MARK: Properties
     @IBOutlet weak var nameTextField: UITextField!
@@ -18,11 +18,27 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        // Handle the text field’s user input through delegate callbacks.
+        nameTextField.delegate = self
     }
 
+    //    MARK: UiFieldDelegates
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        This is called when the Return button is pressed
+//        Hide the keyboard, first responder means view focus to textfield
+        nameTextField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        Called when view focus is cleared
+        mealNameLabel.text = textField.text
+    }
+    
     //MARK: Actions
     @IBAction func setDefaultLabelText(_ sender: UIButton) {
-        mealNameLabel.text = nameTextField.text
+        mealNameLabel.text = "Default Meal"
     }
     
 
